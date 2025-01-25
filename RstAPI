@@ -1,0 +1,35 @@
+package io.restAssured;
+import io.restAssured.RestAssured;
+import io.restAssured.path.json.JsonPath;
+import io.restAssured.response.Response;
+import org.slf4j.LogerFactory;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.slf4j.Logger;
+import static io.restAssured.RestAssured.given;
+
+public class RestAssured{
+	
+	
+	private static final org.testng.log4testng.Logger logger=LoggerFactory.getLogger(RestAssured.class);
+	
+	@Test
+	public void testGetEndpoint(){
+		RestAssured.baseURI="api.coindesk.com/v1/bpi/currentprice.json";
+		Response response=given()
+				.header()
+		.get()
+		.then()
+		.statusCode(200)
+		.extract()
+		.response();
+		
+	JsonPath jsonpathEvaluator=response.jsonpath();
+	String cp=jsonpathEvaluator.get("bpi.GBP.description");
+	Assert.assertEquals(cp, "British Pound Sterling");
+	String responseString=response.asString();
+	logger.info("Response:{}",responseString);
+		
+	}
+	
+}
