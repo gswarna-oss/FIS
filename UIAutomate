@@ -1,0 +1,30 @@
+package SDEEE;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import junit.framework.Assert;
+
+public class FIS_Assmnt {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.gecko.driver","D:\\SeleniumWorkspace\\geckodriver.exe");
+		System.setProperty("WebDRiver.chrome.driver","C:\\Program Files\\chromedriver_win32");
+		WebDriver dvr = new ChromeDriver();
+		dvr.get("https://www.ebay.com");
+		dvr.manage().window().maximize();
+		Select se =new Select(dvr.findElement(By.id("gh-cat")));
+		se.selectByValue("Books");
+		dvr.findElement(By.xpath("//button[@class='gh-search-button btn btn--primary']")).click();
+		dvr.findElement(By.xpath("(//a[@class='bsig__title__wrapper'])[1])")).click();
+		dvr.findElement(By.xpath("//span[text()='Add to cart']")).click();
+		String count=dvr.findElement(By.xpath("//span[text()='1']")).getText();
+		SoftAssert as=new SoftAassert();
+		as.assertEquals(count, 1,"Count matchs in Cart");
+				
+	}
+	}
